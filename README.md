@@ -72,15 +72,15 @@ The code only recognizes reference sheets named BA'd Library, ESP, Fixed Distanc
 
 For benzene substituents:
 ```
-[ProbeName]_[FunctionalGroup]_benzene
+[FunctionalGroup]_benzene
 ```
-  - Ex: Data in this row   <img width="185" alt="probe_header_cell" src="https://user-images.githubusercontent.com/84196711/151258088-2a362923-25e9-4f60-8572-1c99215f09e6.png">   will be indentified as ```12diMe``` in the excel input
+  - Ex: Data in this row <img width="208" alt="Screen Shot 2023-08-02 at 2 37 33 PM" src="https://github.com/SigmanGroup/NCI-Diagnostic-Toolkit/assets/84196711/b0c38dc9-6476-4fbc-9b18-bcf4fbc460e4"> will be indentified as ```1,2diMe``` in the excel input
 
-For other heteroaromatics:
+For other heteroaromatics or other fragments:
 ```
-[ProbeName]_[FunctionalGroup]
+[FunctionalGroup]
 ```
-  - Ex: Data in this row   <img width="186" alt="het" src="https://user-images.githubusercontent.com/84196711/151258734-55143905-2452-477c-b0c7-54c33ef59930.png">   will be indentified as ```2OMe_styrene``` in the excel input
+  - Ex: Data in this row <img width="207" alt="Screen Shot 2023-08-02 at 2 38 25 PM" src="https://github.com/SigmanGroup/NCI-Diagnostic-Toolkit/assets/84196711/7d964b23-97f9-411e-a095-a27071b31e50"> will be indentified as ```2OMe_styrene``` in the excel input
 
 Data for each entry must be added to the corresponding column (e.g. Total Interaction Energy, Electrostatic, Repulsion, Induction, Dispersion). At least one of these columns must contain data.
 
