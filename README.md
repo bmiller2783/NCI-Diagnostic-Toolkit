@@ -1,6 +1,8 @@
 # NCI Diagnostic Toolkit
 
-{Insert blurb about what the tool does and leave space for publication citation}
+A data science tool for analyzing the nature of Non-Covalent Interactions (NCI)
+
+Citation: Pending
 
 *Version v2.1_beta (Jan 5, 2021)*
 
@@ -18,10 +20,10 @@ Software Required:
  - Python3
 
 Python Modules Required:
- - pandas (v
- - numpy (v
- - matplotlib (v
- - adjusttext (v
+ - pandas
+ - numpy
+ - plotly
+ - scipy.stats
 
 *All Python modules can be installed via pip or conda from the terminal:*
 ```
