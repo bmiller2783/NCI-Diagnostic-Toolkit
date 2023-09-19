@@ -29,9 +29,9 @@ def readOptional(ref, h_sht, esp_sht):
     df_esp = pd.read_excel(path, esp_sht, usecols=['Arene Fragment or Substituent',
                                                     'ESP at 2.4 Å',
                                                     'Quadrupole Moment',
-                                                    'L',
-                                                    'B1',
-                                                    'B5',
+                                                    'Sterimol L',
+                                                    'Sterimol B1',
+                                                    'Sterimol B5',
                                                     'HOMO',
                                                     'LUMO'])
     df_opt = df_esp.merge(df_h, how='inner', on='Arene Fragment or Substituent')
