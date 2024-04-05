@@ -9,6 +9,8 @@ def callName(n):
         return '_'.join(n_)
     elif n.lower() == 'benzene' or n.lower() == 'h':
         return 'benzene'
+    elif n.lower() == 'me' or n.lower() == 'ch3':
+        return 'me'
     elif '_BA' in n:
             n_ = n.split('_')[:-1]
             return '_'.join(n_)

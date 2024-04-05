@@ -21,6 +21,7 @@ def LoadData(ref, inp, inp_sht, nci_='All', nrg_='Total Interaction Energy'):
         print('\n check name/spelling with Avaliable Functional Group Names')
         print('\nContinue with Remaining Data?\n')
     else:
+        print(df_inp)
         print('\nData Loaded\n')
 
     return(df_ref, df_inp, df_opt)
