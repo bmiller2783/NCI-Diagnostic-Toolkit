@@ -10,7 +10,8 @@ def callName(n):
     elif n.lower() == 'benzene' or n.lower() == 'h':
         return 'benzene'
     elif n.lower() == 'me' or n.lower() == 'ch3':
-        return 'me'
+        print(n)
+        return 'Me'
     elif '_BA' in n:
             n_ = n.split('_')[:-1]
             return '_'.join(n_)
@@ -68,6 +69,7 @@ def readRef(ref, ref_sht):
     for i, row in df_ref.iterrows():
         n = callName(row['Arene Fragment or Substituent'])
         df_ref.loc[i,['Arene Fragment or Substituent']] = n
+    
 
     return df_ref
 

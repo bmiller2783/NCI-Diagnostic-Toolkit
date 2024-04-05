@@ -2,8 +2,10 @@ import os
 import pandas as pd
 import numpy as np
 
-#from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score
 from scipy.stats import linregress as lr
+from numpy.polynomial import Polynomial
+import numpy.polynomial.polynomial as poly
 #import statsmodels.api as sm
 #import statsmodels.formula.api as smf
 #from sklearn.preprocessing import PolynomialFeatures
@@ -45,15 +47,14 @@ def CORRELOPT(df_ref, df_inp):
         df_plots[p]['Pearson R'] = r
 
         # fit linear
-        m, b, r2_, p_, std_err = lr(x, y)
-
-        # Determinant
-        r2 = r2_**2
-        df_correls['R^2'].append(r2)
-        df_plots[p]['R^2'] = r2
-
+        m, b, r_, p_, std_err = lr(x, y)
         y_pred = (m * x) + b
         df_plots[p]['Y_pred'] = y_pred
+
+        # Determinant
+        r2 = r2_score(y, y_pred)
+        df_correls['R^2'].append(r2)
+        df_plots[p]['R^2'] = r2
 
     return (pd.DataFrame(df_correls), pd.DataFrame(df_plots))
 
@@ -110,30 +111,30 @@ def CORREL(df_ref, df_inp, nci_, nrg_):
         df_plots[p]['Pearson R'] = r
 
         # fit linear
-        m, b, r2_, p_, std_err = lr(x, y)
+        m, b, r_, p_, std_err = lr(x, y)
+        y_pred = (m * x) + b
+        df_plots[p]['Y_pred'] = y_pred
 
         # Determinant
-        r2 = r2_**2
+        r2 = r2_score(y, y_pred)
         df_correls['R^2'].append(r2)
         df_plots[p]['R^2'] = r2
 
-        y_pred = (m * x) + b
-        df_plots[p]['Y_pred'] = y_pred
         resids = y - y_pred
         df_plots[p]['Y_resid'] = resids
-        #df_plots[p]['Xpos'] = [x.iloc(i) for i in range(len(resids)) if float(resids.iloc(i)) >= 0]
-        #df_plots[p]['Xneg'] = [x.iloc(i) for i in range(len(resids)) if float(resids.iloc(i)) < 0]
 
-        poly = np.poly1d(np.polyfit(y, resids, 2))
-        #eqn = a2 * np.square(resids) + b2 * resids + c2
-        #y_resid = a2 * np.square(resids) + b2 * resids + c2
+        #coefs = Polynomial.fit(y, resids, 2)#np.poly1d
 
-        m_p, b_p, r2_p_, p_p, std_err_p = lr(resids, poly(y))
-        r2_p = r2_p_**2
+        p_ = np.poly1d(np.polyfit(y, resids, 2))
+
+        p_ = poly.polyval(y, p_)
+
+        #m_p, b_p, r2_p_, p_p, std_err_p = lr(y, p_)
+        r2_p = r2_score(y, p_)
         df_correls['Residual R^2'].append(r2_p)
 
-        y_resid_pred = poly(y)
-        df_plots[p]['Y_resid_pred'] = y_resid_pred
+        y_resid_pred = p_
+        df_plots[p]['Y_resid_pred'] = y_resid_pred.tolist()
 
         nci_score = (abs(rho) + (r2 - r2_p)) / 2
 
