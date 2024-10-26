@@ -10,7 +10,6 @@ def callName(n):
     elif n.lower() == 'benzene' or n.lower() == 'h':
         return 'benzene'
     elif n.lower() == 'me' or n.lower() == 'ch3':
-        print(n)
         return 'Me'
     elif '_BA' in n:
             n_ = n.split('_')[:-1]
@@ -27,7 +26,7 @@ def readOptional(ref, h_sht, esp_sht):
                                                     'σp',
                                                     'σm',
                                                     'σ+p',
-                                                    'σ-p',
+                                                    'σ -p',
                                                     'σ+m'])
     df_esp = pd.read_excel(path, esp_sht, usecols=['Arene Fragment or Substituent',
                                                     'ESP at 2.4 Å',
@@ -36,7 +35,8 @@ def readOptional(ref, h_sht, esp_sht):
                                                     'Sterimol B1',
                                                     'Sterimol B5',
                                                     'HOMO',
-                                                    'LUMO'])
+                                                    'LUMO',
+                                                    'Pint*Area'])
     df_opt = df_esp.merge(df_h, how='inner', on='Arene Fragment or Substituent')
 
     ## replace names with callable ##
@@ -69,7 +69,7 @@ def readRef(ref, ref_sht):
     for i, row in df_ref.iterrows():
         n = callName(row['Arene Fragment or Substituent'])
         df_ref.loc[i,['Arene Fragment or Substituent']] = n
-    
+
 
     return df_ref
 
@@ -112,9 +112,9 @@ def READ(ref, inp, inp_sht, nci_, nrg_):
         ref_sht = "Fixed Distance Anion-pi"
 
     ## read files ##
-    df_inp = readInp(inp, inp_sht)
-    df_ref = readRef(ref, ref_sht)
-    df_opt = readOptional(ref, h_sht, esp_sht)
+    df_inp = readInp(inp, inp_sht)#.dropna(axis=1)
+    df_ref = readRef(ref, ref_sht)#.dropna(axis=0)
+    df_opt = readOptional(ref, h_sht, esp_sht)#.dropna(axis=1)
 
     nci_switcher = {
     'all': df_ref['Probe'].unique(),

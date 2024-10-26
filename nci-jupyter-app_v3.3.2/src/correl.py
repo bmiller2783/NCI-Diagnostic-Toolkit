@@ -4,8 +4,8 @@ import numpy as np
 
 from sklearn.metrics import r2_score
 from scipy.stats import linregress as lr
-from numpy.polynomial import Polynomial
-import numpy.polynomial.polynomial as poly
+#from numpy.polynomial import Polynomial
+from sklearn.preprocessing import PolynomialFeatures
 #import statsmodels.api as sm
 #import statsmodels.formula.api as smf
 #from sklearn.preprocessing import PolynomialFeatures
@@ -41,6 +41,7 @@ def CORRELOPT(df_ref, df_inp):
         df_plots[p]["Spearman's Rho"] = rho
         y_rank_pred = (m_r * df_plots[p]['X_rank']) + b_r
         df_plots[p]['Y_rank_pred'] = y_rank_pred
+
         # Pearson
         r = x.corr(y, method='pearson')
         df_correls['Pearson R'].append(r)
@@ -105,6 +106,7 @@ def CORREL(df_ref, df_inp, nci_, nrg_):
         df_plots[p]["Spearman's Rho"] = rho
         y_rank_pred = (m_r * df_plots[p]['X_rank']) + b_r
         df_plots[p]['Y_rank_pred'] = y_rank_pred
+
         # Pearson
         r = x.corr(y, method='pearson')
         df_correls['Pearson R'].append(r)
@@ -123,17 +125,15 @@ def CORREL(df_ref, df_inp, nci_, nrg_):
         resids = y - y_pred
         df_plots[p]['Y_resid'] = resids
 
-        #coefs = Polynomial.fit(y, resids, 2)#np.poly1d
-
-        p_ = np.poly1d(np.polyfit(y, resids, 2))
-
-        p_ = poly.polyval(y, p_)
-
-        #m_p, b_p, r2_p_, p_p, std_err_p = lr(y, p_)
-        r2_p = r2_score(y, p_)
+        poly = np.polynomial.polynomial.Polynomial.fit(x, resids, 2).convert().coef
+        y_resid_pred = ((x**2)*poly[2]) + (x*poly[1]) + poly[0]
+        #print(poly)
+        #m_p, b_p, r2_p, p_p, std_err_p = lr(x, )
+        #print(resids, y_resid_pred)
+        r2_p = r2_score(resids, y_resid_pred)
         df_correls['Residual R^2'].append(r2_p)
 
-        y_resid_pred = p_
+        #y_resid_pred = (m_p * x) + b_p
         df_plots[p]['Y_resid_pred'] = y_resid_pred.tolist()
 
         nci_score = (abs(rho) + (r2 - r2_p)) / 2

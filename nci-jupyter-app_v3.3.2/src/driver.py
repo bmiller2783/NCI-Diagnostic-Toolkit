@@ -60,6 +60,5 @@ def RunOptional(df_opt, df_inp):
     ## make plots ##
     #plot.PLOT(df_plot)
 
-
 if __name__ == '__main__':
     print('oops, only jupyter notebook compatible right now!')

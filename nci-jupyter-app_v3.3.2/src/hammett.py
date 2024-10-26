@@ -7,7 +7,7 @@ def main(df_h):
 
     df_correls_h = {'Probe':[], 'Pearson R':[], 'Determinant R^2':[], "Spearman's Rho":[]}
     df_plots_h = {}
-    for s in ['σp','σm','σ+p','σ-p','σ+m']:
+    for s in ['σp','σm','σ+p','σ -p','σ+m']:
       df_correls_h['Probe'].append(s)
       df_plots_h[s] = {}
       df_plots_h[s]['Arene Fragment or Substituent'] = df_h['Arene Fragment or Substituent']

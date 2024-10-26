@@ -123,11 +123,11 @@ def PLOT(df_plots, nrg_):
                                 ), row=count+1, col=1)
         #linear fit
         fig.add_trace(Scatter(x=df_plots[p]['X'], y=df_plots[p]['Y_pred'], mode='lines',
-                                text='R^2='+str(df_plots[p]['R^2'].round(2)),
+                                text='R^2='+str(round(df_plots[p]['R^2'], 2)),
                                 marker = {'color': 'red'}
                                 ), row=count+1, col=1)
         fig.add_annotation(x=1, y=1, xref='x domain',yref='y domain',showarrow=False,
-                                text='R^2='+str(df_plots[p]['R^2'].round(2)),
+                                text='R^2='+str(round(df_plots[p]['R^2'], 2)),
                                 font=dict(size=16,color='white'),bordercolor='black',bgcolor='gray', borderpad=2,
                                 row=count+1, col=1)
         #linear residual
@@ -154,11 +154,11 @@ def PLOT(df_plots, nrg_):
                                 ), row=count+1, col=3)
         #rank fit
         fig.add_trace(Scatter(x=df_plots[p]['X_rank'], y=df_plots[p]['Y_rank_pred'], mode='lines',
-                                text='Rho='+str(df_plots[p]["Spearman's Rho"].round(2)),
+                                text='Rho='+str(round(df_plots[p]["Spearman's Rho"], 2)),
                                 marker = {'color': 'blue'}
                                 ), row=count+1, col=3)
         fig.add_annotation(x=1, y=1, xref='x domain',yref='y domain',showarrow=False,
-                                text='Rho='+str(df_plots[p]["Spearman's Rho"].round(2)),
+                                text='Rho='+str(round(df_plots[p]["Spearman's Rho"], 2)),
                                 font=dict(size=16,color='white'),bordercolor='black',bgcolor='gray', borderpad=2,
                                 row=count+1, col=3)
 
