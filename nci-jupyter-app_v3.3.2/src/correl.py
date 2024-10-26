@@ -2,10 +2,13 @@ import os
 import pandas as pd
 import numpy as np
 
-from sklearn.metrics import r2_score
+#from sklearn.metrics import r2_score
 from scipy.stats import linregress as lr
+<<<<<<< HEAD
 #from numpy.polynomial import Polynomial
 from sklearn.preprocessing import PolynomialFeatures
+=======
+>>>>>>> parent of 76c6306 (Me-CH3 synonym detection)
 #import statsmodels.api as sm
 #import statsmodels.formula.api as smf
 #from sklearn.preprocessing import PolynomialFeatures
@@ -48,14 +51,15 @@ def CORRELOPT(df_ref, df_inp):
         df_plots[p]['Pearson R'] = r
 
         # fit linear
-        m, b, r_, p_, std_err = lr(x, y)
-        y_pred = (m * x) + b
-        df_plots[p]['Y_pred'] = y_pred
+        m, b, r2_, p_, std_err = lr(x, y)
 
         # Determinant
-        r2 = r2_score(y, y_pred)
+        r2 = r2_**2
         df_correls['R^2'].append(r2)
         df_plots[p]['R^2'] = r2
+
+        y_pred = (m * x) + b
+        df_plots[p]['Y_pred'] = y_pred
 
     return (pd.DataFrame(df_correls), pd.DataFrame(df_plots))
 
@@ -113,18 +117,21 @@ def CORREL(df_ref, df_inp, nci_, nrg_):
         df_plots[p]['Pearson R'] = r
 
         # fit linear
-        m, b, r_, p_, std_err = lr(x, y)
-        y_pred = (m * x) + b
-        df_plots[p]['Y_pred'] = y_pred
+        m, b, r2_, p_, std_err = lr(x, y)
 
         # Determinant
-        r2 = r2_score(y, y_pred)
+        r2 = r2_**2
         df_correls['R^2'].append(r2)
         df_plots[p]['R^2'] = r2
 
+        y_pred = (m * x) + b
+        df_plots[p]['Y_pred'] = y_pred
         resids = y - y_pred
         df_plots[p]['Y_resid'] = resids
+        #df_plots[p]['Xpos'] = [x.iloc(i) for i in range(len(resids)) if float(resids.iloc(i)) >= 0]
+        #df_plots[p]['Xneg'] = [x.iloc(i) for i in range(len(resids)) if float(resids.iloc(i)) < 0]
 
+<<<<<<< HEAD
         poly = np.polynomial.polynomial.Polynomial.fit(x, resids, 2).convert().coef
         y_resid_pred = ((x**2)*poly[2]) + (x*poly[1]) + poly[0]
         #print(poly)
@@ -135,6 +142,18 @@ def CORREL(df_ref, df_inp, nci_, nrg_):
 
         #y_resid_pred = (m_p * x) + b_p
         df_plots[p]['Y_resid_pred'] = y_resid_pred.tolist()
+=======
+        poly = np.poly1d(np.polyfit(y, resids, 2))
+        #eqn = a2 * np.square(resids) + b2 * resids + c2
+        #y_resid = a2 * np.square(resids) + b2 * resids + c2
+
+        m_p, b_p, r2_p_, p_p, std_err_p = lr(resids, poly(y))
+        r2_p = r2_p_**2
+        df_correls['Residual R^2'].append(r2_p)
+
+        y_resid_pred = poly(y)
+        df_plots[p]['Y_resid_pred'] = y_resid_pred
+>>>>>>> parent of 76c6306 (Me-CH3 synonym detection)
 
         nci_score = (abs(rho) + (r2 - r2_p)) / 2
 

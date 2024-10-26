@@ -10,7 +10,11 @@ def callName(n):
     elif n.lower() == 'benzene' or n.lower() == 'h':
         return 'benzene'
     elif n.lower() == 'me' or n.lower() == 'ch3':
+<<<<<<< HEAD
         return 'Me'
+=======
+        return 'me'
+>>>>>>> parent of 76c6306 (Me-CH3 synonym detection)
     elif '_BA' in n:
             n_ = n.split('_')[:-1]
             return '_'.join(n_)
@@ -69,7 +73,10 @@ def readRef(ref, ref_sht):
     for i, row in df_ref.iterrows():
         n = callName(row['Arene Fragment or Substituent'])
         df_ref.loc[i,['Arene Fragment or Substituent']] = n
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 76c6306 (Me-CH3 synonym detection)
 
     return df_ref
 
